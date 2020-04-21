@@ -70,7 +70,7 @@ function getWinners(cb, data) {
             winners.push(item["Win conditions"]);
         }
     })
-return winners;
+    return winners;
 };
 
 console.log(getWinners(getFinals, fifaData));
@@ -82,11 +82,18 @@ Parameters:
  * callback function getYears
  */
 
-function getAllWinners( /* code here */ ) {
+function getAllWinners(cbwinners, cbyears, data) {
+const yearArr = cbyears(getFinals, data);
+const winnerArr = cbwinners(getFinals, data);
+const strArr = [];
 
+for (let i=0; i<yearArr.length; i++){
+    strArr.push( `In ${yearArr[i]}, ${winnerArr[i]} won the world cup!`);
+}
+return strArr;
 };
 
-getAllWinners();
+console.log(getAllWinners(getWinners, getYears, fifaData));
 
 /* Task 7: Create a function called `getCountryWins` that takes the parameters `data` and `team initials` and returns the number of world cup wins that country has had. 
 
