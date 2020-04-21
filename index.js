@@ -83,14 +83,14 @@ Parameters:
  */
 
 function getAllWinners(cbwinners, cbyears, data) {
-const yearArr = cbyears(getFinals, data);
-const winnerArr = cbwinners(getFinals, data);
-const strArr = [];
+    const yearArr = cbyears(getFinals, data);
+    const winnerArr = cbwinners(getFinals, data);
+    const strArr = [];
 
-for (let i=0; i<yearArr.length; i++){
-    strArr.push( `In ${yearArr[i]}, ${winnerArr[i]} won the world cup!`);
-}
-return strArr;
+    for (let i = 0; i < yearArr.length; i++) {
+        strArr.push(`In ${yearArr[i]}, ${winnerArr[i]} won the world cup!`);
+    }
+    return strArr;
 };
 
 console.log(getAllWinners(getWinners, getYears, fifaData));
@@ -100,13 +100,27 @@ console.log(getAllWinners(getWinners, getYears, fifaData));
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins( /* code here */ ) {
-
-    /* code here */
-
+function getCountryWins(data, initials) {
+    const winners = [];
+        getFinals(data).forEach(function (item) {
+        if (item["Home Team Goals"] > item["Away Team Goals"]) {
+            winners.push(item["Home Team Initials"]);
+        } else if (item["Home Team Goals"] < item["Away Team Goals"]) {
+            winners.push(item["Away Team Initials"]);
+        } else {
+            winners.push(item["Win conditions"]);
+        }
+    })
+    let totalWins = winners.reduce(function (accumulator, currentValue) {
+            if(currentValue === initials){
+                accumulator ++;
+            }
+            return accumulator;
+    }, 0)
+    return totalWins;
 };
 
-getCountryWins();
+console.log(getCountryWins(fifaData, "ITA"));
 
 
 /* Task 8: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
